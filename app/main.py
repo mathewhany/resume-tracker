@@ -1,3 +1,4 @@
+import os
 from typing import Annotated
 from fastapi import Depends, FastAPI
 from fastapi.responses import RedirectResponse
@@ -7,8 +8,11 @@ from .metrics import MetricsManager, JSONMetricsManager
 
 
 def get_metrics_manager():
+    if not os.path.exists("metrics.json"):
+        open("metrics.json", "w+").close()
+
     try:
-        file = open("metrics.json", "w+")
+        file = open("metrics.json", "r+")
         yield JSONMetricsManager(file)
     finally:
         file.close()
