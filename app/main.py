@@ -8,7 +8,7 @@ from .metrics import MetricsManager, JSONMetricsManager
 
 def get_metrics_manager():
     try:
-        file = open("metrics.json", "r+")
+        file = open("metrics.json", "w+")
         yield JSONMetricsManager(file)
     finally:
         file.close()
